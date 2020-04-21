@@ -21,9 +21,8 @@ require_once 'db.php';
     }
     else {
         if ($row['password'] == $password) {
-            $_SESSION['login'] = $row['login']; 
-            $_SESSION['id'] = $row['id'];
-            header('Location: list_users.php');;
+            $_SESSION['login'] = $row['login'];
+            header('Location: list_users.php');
         }
         else {
             exit ("введённый вами пароль неверный. Вернуться <a href='/'>НАЗАД</a>");

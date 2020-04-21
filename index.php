@@ -41,10 +41,10 @@
         <br>
         <?php
             if (empty($_SESSION['login'])) {
-            echo "Вы вошли на сайт, как гость<br>";
+            echo "Вы вошли как гость<br>";
         }
         else {
-            echo "Вы вошли на сайт, как ".$_SESSION['login']."<br><a  href='/list_users.php'>Список пользователей</a><br>";
+            echo "Вы вошли как ".$_SESSION['login']."<br><a  href='/list_users.php'>Список пользователей</a><br>";
             echo "<a  href='/exit.php'>Выйти</a>";
         }
         ?>

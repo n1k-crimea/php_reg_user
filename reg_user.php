@@ -23,8 +23,7 @@ require_once 'db.php';
     $insert_user = $connection->prepare("INSERT INTO users (login, password) VALUES (?, ?)");
     $insert_user->execute(array($login, $password));
     if ($insert_user) {
-        $_SESSION['login'] = $row['login']; 
-        $_SESSION['id'] = $row['id'];
+        $_SESSION['login'] = $login;
         header('Location: list_users.php');
     }
     else {
