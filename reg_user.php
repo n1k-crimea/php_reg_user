@@ -11,24 +11,22 @@
 
     require_once 'db.php';
 
-    $check_user = $connection->query("SELECT login FROM users WHERE login='$login'");
+    $check_user = $connection->prepare("SELECT login FROM users WHERE login= :login");
+    $check_user->bindParam(':login',$login);
+    $check_user->execute();
     $row = $check_user->fetch(PDO::FETCH_ASSOC);
     if (!empty($row['login'])) {
-        exit ("логин занят");
+        exit ("логин занят. Вернуться <a href='/'>НАЗАД</a>");
     };
 
-    $insert_user = $connection->exec("INSERT INTO users (login, password) VALUES ('$login', '$password')");
+    //$insert_user = $connection->exec("INSERT INTO users (login, password) VALUES (".$connection->quote($login).",".$connection->quote($password).")");
+    $insert_user = $connection->prepare("INSERT INTO users (login, password) VALUES (:login, :password)");
+    $insert_user->bindParam(':login', $login);
+    $insert_user->bindParam(':password', $password);
+    $insert_user->execute();
     if ($insert_user) {
-        echo "Регистрация прошла";
-        echo "<table border='1'>";
-        foreach($connection->query('SELECT * FROM users') as $row) {
-            echo "<tr>";
-            echo "<td>" . $row['id'] . "</td><td>" . $row['login'] . "</td>";
-            echo "</tr>";
-        };
-        echo "</table>";
+        header('Location: list_users.php');
     }
     else {
         echo "Ошибка! Вы не зарегистрированы. Вернуться <a href='/'>НАЗАД</a>";
     }
-?>
