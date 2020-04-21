@@ -19,11 +19,8 @@
         exit ("логин занят. Вернуться <a href='/'>НАЗАД</a>");
     };
 
-    //$insert_user = $connection->exec("INSERT INTO users (login, password) VALUES (".$connection->quote($login).",".$connection->quote($password).")");
-    $insert_user = $connection->prepare("INSERT INTO users (login, password) VALUES (:login, :password)");
-    $insert_user->bindParam(':login', $login);
-    $insert_user->bindParam(':password', $password);
-    $insert_user->execute();
+    $insert_user = $connection->prepare("INSERT INTO users (login, password) VALUES (?, ?)");
+    $insert_user->execute(array($login, $password));
     if ($insert_user) {
         header('Location: list_users.php');
     }
